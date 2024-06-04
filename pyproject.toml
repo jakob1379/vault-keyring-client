@@ -18,7 +18,20 @@ ansible = "^9.6.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.7.1"
+ruff = "^0.4.7"
+commitizen = "^3.27.0"
 
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "semver2"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff.lint]
+select = ["E", "W", "I", "F", "B", "N"]

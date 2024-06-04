@@ -11,36 +11,23 @@ The `vault-keyring-client` is a CLI tool to store and retrieve Ansible vault pas
 To install the `vault-keyring-client`, you can use [Poetry](https://python-poetry.org/):
 
 ```sh
-poetry add vault-keyring-client
+poetry add git+https://git@github.com/jakob1379/vault-keyring-client.git#main
 ```
 
 ## Usage
 
-The `vault-keyring-client` provides the following commands:
-
-- `get_password`: Retrieve a password from the keyring.
-- `set_password`: Store a password in the keyring.
-- `delete_password`: Delete a password from the keyring.
-
-### Examples
-
-Retrieve a password:
-
-```sh
-poetry run vault-keyring-client --vault-id myservice --username myuser
+```console
+$ vault-keyring-client [OPTIONS]
 ```
 
-Store a password:
+**Options**:
 
-```sh
-poetry run vault-keyring-client --vault-id myservice --username myuser --set
-```
-
-Delete a password:
-
-```sh
-poetry run vault-keyring-client delete-password --vault-id myservice --username myuser
-```
+* `--vault-id TEXT`: Name of the vault secret to get from keyring
+* `--username TEXT`: The username whose keyring is queried
+* `--set`: Set the password instead of getting it
+* `--install-completion`: Install completion for the current shell.
+* `--show-completion`: Show completion for the current shell, to copy it or customize the installation.
+* `--help`: Show this message and exit.
 
 ## Original Script
 

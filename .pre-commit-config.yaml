@@ -1,47 +1,51 @@
+---
 repos:
-- hooks:
-  - id: check-added-large-files
-  - id: check-ast
-  - id: check-merge-conflict
-  - id: check-yaml
-  - id: end-of-file-fixer
-  - args:
-    - --fix=auto
-    id: mixed-line-ending
-  - id: trailing-whitespace
-  repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.6.0
-- hooks:
-  - description: Bandit is a tool for finding common security issues in Python code
-    entry: bandit
-    id: bandit
-    language: python
-    language_version: python3
-    name: bandit
-    require_serial: true
-    types:
-    - python
-  repo: https://github.com/PyCQA/bandit
-  rev: 1.7.8
-- hooks:
-  - args:
-    - --sources
-    - gemnasium
-    id: skjold
-    verbose: true
-  repo: https://github.com/twu/skjold
-  rev: v0.6.2
-- hooks:
-  - args:
-    - --fix
-    id: ruff
-  - id: ruff-format
-  repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.4.7
-- hooks:
-  - id: commitizen
-  - id: commitizen-branch
-    stages:
-    - push
-  repo: https://github.com/commitizen-tools/commitizen
-  rev: v3.27.0
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - args: ["--fix=auto"]
+        id: mixed-line-ending
+      - id: trailing-whitespace
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.8
+    hooks:
+      - description: Bandit is a tool for finding common security issues in Python code
+        entry: bandit
+        id: bandit
+        language: python
+        language_version: python3
+        name: bandit
+        require_serial: true
+        types:
+          - python
+
+  - repo: https://github.com/twu/skjold
+    rev: v0.6.2
+    hooks:
+      - id: skjold
+        args:
+          - --sources
+          - gemnasium
+        verbose: true
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.7
+    hooks:
+      - id: ruff
+        args:
+          - --fix
+      - id: ruff-format
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.27.0
+    hooks:
+    - id: commitizen
+    - id: commitizen-branch
+      stages:
+      - push

@@ -29,9 +29,13 @@ version_scheme = "semver2"
 version_provider = "poetry"
 update_changelog_on_bump = true
 major_version_zero = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "W", "I", "F", "B", "N"]

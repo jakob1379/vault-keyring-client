@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vault-keyring-client"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Jakob Guldberg Aaes <jakob1379@gmail.com>"]
 readme = "README.md"
@@ -10,7 +10,7 @@ license = "GPL-3.0-or-later"
 vault-keyring-client = "vault_keyring_client.main:app"
 
 [tool.poetry.dependencies]
-python = ">=3.11,<4.0"
+python = ">=3.10,<4.0"
 typer = "^0.12.3"
 keyring = "^25.2.1"
 ansible = "^9.6.0"

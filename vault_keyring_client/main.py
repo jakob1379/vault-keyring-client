@@ -61,7 +61,7 @@ def main(
     else:
         password = keyring.get_password(keyname, username)
         if password:
-            typer.echo(f"Password for {username} in {keyname}: {password}")
+            typer.echo(password)
         else:
             typer.echo("No password found.")
             sys.exit(KEYNAME_UNKNOWN_RC)

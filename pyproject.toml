@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "vault-keyring-client"
-version = "0.2.3"
+version = "0.2.4"
 description = ""
 authors = ["Jakob Guldberg Aaes <jakob1379@gmail.com>"]
 readme = "README.md"

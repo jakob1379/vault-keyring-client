@@ -1,19 +1,19 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
       - id: check-merge-conflict
       - id: check-yaml
       - id: end-of-file-fixer
-      - args: ["--fix=auto"]
-        id: mixed-line-ending
+      - id: mixed-line-ending
+        args: ["--fix=auto"]
       - id: trailing-whitespace
 
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.8
+    rev: 1.8.2
     hooks:
       - description: Bandit is a tool for finding common security issues in Python code
         entry: bandit
@@ -35,7 +35,7 @@ repos:
         verbose: true
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.4.7
+    rev: v0.9.6
     hooks:
       - id: ruff
         args:
@@ -43,9 +43,9 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.27.0
+    rev: v4.2.1
     hooks:
     - id: commitizen
     - id: commitizen-branch
       stages:
-      - push
+      - pre-push

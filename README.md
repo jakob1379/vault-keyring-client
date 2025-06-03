@@ -8,11 +8,7 @@ The `vault-keyring-client` is a CLI tool to store and retrieve Ansible vault pas
 
 ## Installation
 
-To install the `vault-keyring-client`, you can use [Poetry](https://python-poetry.org/):
-
-```sh
-poetry add git+https://git@github.com/jakob1379/vault-keyring-client.git#main
-```
+To install the `vault-keyring-client`, you can use use your preferred python package manager
 
 ## Usage
 

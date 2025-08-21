@@ -3,7 +3,7 @@ import sys
 
 import keyring
 import typer
-from ansible.config.manager import ConfigManager, get_ini_config_value
+from ansible.config.manager import ConfigManager
 
 app = typer.Typer()
 
@@ -17,16 +17,18 @@ def get_config_values():
     config = ConfigManager()
     if config._config_file:
         username = (
-            get_ini_config_value(
-                config._parsers[config._config_file],
-                dict(section="vault", key="username"),
+            config._get_ini_config_value(
+                config._config_file,
+                'vault',
+                'username',
             )
             or username
         )
         keyname = (
-            get_ini_config_value(
-                config._parsers[config._config_file],
-                dict(section="vault", key="keyname"),
+            config._get_ini_config_value(
+                config._config_file,
+                'vault',
+                'keyname',
             )
             or keyname
         )

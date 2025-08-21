@@ -1,3 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+  "commitizen>=4.2.1",
+  "coverage>=7.10.4",
+  "poethepoet>=0.37.0",
+  "pre-commit>=4.1.0",
+  "pytest>=8.3.4",
+  "pytest-cov>=6.2.1",
+  "pytest-datadir>=1.8.0",
+  "pytest-xdist>=3.8.0",
+  "ruff>=0.9.6",
+]
+
 [project]
 name = "vault-keyring-client"
 version = "0.2.4"
@@ -7,23 +24,18 @@ readme = "README.md"
 license = {text = "GPL-3.0-or-later"}
 requires-python = ">=3.10,<4.0"
 dependencies = [
-    "typer>=0.12.3",
-    "keyring>=25.2.1",
-    "ansible>=9.6.0",
+  "typer>=0.12.3",
+  "keyring>=25.2.1",
+  "ansible>=9.6.0"
 ]
+
+[project.scripts]
+vault-keyring-client = "vault_keyring_client.main:app"
 
 [project.urls]
 Repository = "https://git@github.com/jakob1379/vault-keyring-client"
 Issues = "https://github.com/jakob1379/vault-keyring-client/issues"
 Changelog = "https://github.com/jakob1379/vault-keyring-client/blob/main/CHANGELOG.md"
-
-[project.scripts]
-vault-keyring-client = "vault_keyring_client.main:app"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 
 [tool.commitizen]
 name = "cz_conventional_commits"
@@ -39,10 +51,8 @@ line-length = 100
 [tool.ruff.lint]
 select = ["E", "W", "I", "F", "B", "N"]
 
-[dependency-groups]
-dev = [
-    "commitizen>=4.2.1",
-    "pre-commit>=4.1.0",
-    "pytest>=8.3.4",
-    "ruff>=0.9.6",
-]
+[tool.poe.tasks]
+_setup_pre-commit = "pre-commit install"
+setup = { sequence = ["_setup_pre-commit"], help = "Setup the dev environment" }
+lint = { cmd = "pre-commit run --all-files", help = "Run pre-commit hooks" }
+clean = { cmd = "find . -type f -name \"*.pyc\" -delete && find . -type d -name \"__pycache__\" -delete && rm -rf .mypy_cache .pytest_cache .ruff_cache", help = "Clean Python and other relevant cache/tmp files" }

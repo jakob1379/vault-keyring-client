@@ -12,7 +12,7 @@ dev = [
   "pytest-cov>=6.2.1",
   "pytest-datadir>=1.8.0",
   "pytest-xdist>=3.8.0",
-  "ruff>=0.9.6",
+  "ruff>=0.9.6"
 ]
 
 [project]
@@ -24,9 +24,9 @@ readme = "README.md"
 license = {text = "GPL-3.0-or-later"}
 requires-python = ">=3.10,<4.0"
 dependencies = [
-    "typer>=0.16.1",
-    "keyring>=25.6.0",
-    "ansible>=11.9.0",
+  "typer>=0.16.1",
+  "keyring>=25.6.0",
+  "ansible>=11.9.0"
 ]
 
 [project.scripts]
@@ -45,14 +45,14 @@ version_provider = "pep621"
 update_changelog_on_bump = true
 major_version_zero = true
 
+[tool.poe.tasks]
+_setup_pre-commit = "pre-commit install"
+setup = {sequence = ["_setup_pre-commit"], help = "Setup the dev environment"}
+lint = {cmd = "pre-commit run --all-files", help = "Run pre-commit hooks"}
+clean = {cmd = "find . -type f -name \"*.pyc\" -delete && find . -type d -name \"__pycache__\" -delete && rm -rf .mypy_cache .pytest_cache .ruff_cache", help = "Clean Python and other relevant cache/tmp files"}
+
 [tool.ruff]
 line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "W", "I", "F", "B", "N"]
-
-[tool.poe.tasks]
-_setup_pre-commit = "pre-commit install"
-setup = { sequence = ["_setup_pre-commit"], help = "Setup the dev environment" }
-lint = { cmd = "pre-commit run --all-files", help = "Run pre-commit hooks" }
-clean = { cmd = "find . -type f -name \"*.pyc\" -delete && find . -type d -name \"__pycache__\" -delete && rm -rf .mypy_cache .pytest_cache .ruff_cache", help = "Clean Python and other relevant cache/tmp files" }

@@ -19,16 +19,16 @@ def get_config_values():
         username = (
             config._get_ini_config_value(
                 config._config_file,
-                'vault',
-                'username',
+                "vault",
+                "username",
             )
             or username
         )
         keyname = (
             config._get_ini_config_value(
                 config._config_file,
-                'vault',
-                'keyname',
+                "vault",
+                "keyname",
             )
             or keyname
         )

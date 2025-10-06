@@ -42,7 +42,7 @@ repos:
 
   # Python linting and formatting with Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.12.11
+    rev: v0.13.3
     hooks:
       - id: ruff  # Run Ruff linter
         args: [--fix, --exit-non-zero-on-fix]
@@ -72,13 +72,13 @@ repos:
 
   # YAML linting (more strict than basic check)
   - repo: https://github.com/lyz-code/yamlfix
-    rev: 1.17.0
+    rev: 1.18.0
     hooks:
       - id: yamlfix
 
   # TOML sorting
   - repo: https://github.com/pappasam/toml-sort
-    rev: v0.24.2
+    rev: v0.24.3
     hooks:
       - id: toml-sort-fix
         files: \.toml$
@@ -91,7 +91,7 @@ repos:
 
   # Conventional commit message enforcement
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.8.3
+    rev: v4.9.1
     hooks:
       - id: commitizen
         stages: [commit-msg]  # Check commit message format
@@ -101,7 +101,7 @@ repos:
 
   # JSON Schema validation for common config files
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.33.3
+    rev: 0.34.0
     hooks:
       - id: check-github-workflows  # Validate GitHub workflow files
       # Add other schema checks if needed (e.g., check-readthedocs)
@@ -127,6 +127,6 @@ repos:
         args: [-c, pyproject.toml]  # Example: Configure via pyproject.toml
         types: [python]
   - repo: https://github.com/owenlamont/uv-secure
-    rev: 0.13.0
+    rev: 0.14.1
     hooks:
       - id: uv-secure

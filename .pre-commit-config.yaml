@@ -42,7 +42,7 @@ repos:
 
   # Python linting and formatting with Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.3
+    rev: v0.14.3
     hooks:
       - id: ruff  # Run Ruff linter
         args: [--fix, --exit-non-zero-on-fix]
@@ -72,7 +72,7 @@ repos:
 
   # YAML linting (more strict than basic check)
   - repo: https://github.com/lyz-code/yamlfix
-    rev: 1.18.0
+    rev: 1.19.0
     hooks:
       - id: yamlfix
 
@@ -101,7 +101,7 @@ repos:
 
   # JSON Schema validation for common config files
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.34.0
+    rev: 0.34.1
     hooks:
       - id: check-github-workflows  # Validate GitHub workflow files
       # Add other schema checks if needed (e.g., check-readthedocs)
@@ -127,6 +127,6 @@ repos:
         args: [-c, pyproject.toml]  # Example: Configure via pyproject.toml
         types: [python]
   - repo: https://github.com/owenlamont/uv-secure
-    rev: 0.14.1
+    rev: 0.14.3
     hooks:
       - id: uv-secure

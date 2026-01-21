@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+import sys
+from vault_keyring_client.main import app
+if __name__ == '__main__':
+    if sys.argv[0].endswith('.exe'):
+        sys.argv[0] = sys.argv[0][:-4]
+    sys.exit(app())

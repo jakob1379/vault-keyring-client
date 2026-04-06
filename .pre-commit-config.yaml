@@ -40,7 +40,7 @@ repos:
 
   # Python linting and formatting with Ruff
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.14.13
+    rev: v0.15.9
     hooks:
       - id: ruff  # Run Ruff linter
         args: [--fix, --exit-non-zero-on-fix]
@@ -50,7 +50,7 @@ repos:
 
   # Formatting for various file types with Prettier
   - repo: https://github.com/rbubley/mirrors-prettier  # Using rbubley mirror
-    rev: v3.8.0
+    rev: v3.8.1
     hooks:
       - id: prettier
         types_or: [markdown, html, css, scss, javascript, json]
@@ -61,7 +61,7 @@ repos:
 
   # Spell checking
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.2
     hooks:
       - id: codespell
         args: [--write-changes]
@@ -76,7 +76,7 @@ repos:
 
   # TOML sorting
   - repo: https://github.com/pappasam/toml-sort
-    rev: v0.24.3
+    rev: v0.24.4
     hooks:
       - id: toml-sort-fix
         files: \.toml$
@@ -89,7 +89,7 @@ repos:
 
   # Conventional commit message enforcement
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.12.0
+    rev: v4.13.9
     hooks:
       - id: commitizen
         stages: [commit-msg]  # Check commit message format
@@ -99,7 +99,7 @@ repos:
 
   # JSON Schema validation for common config files
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.36.0
+    rev: 0.37.1
     hooks:
       - id: check-github-workflows  # Validate GitHub workflow files
       # Add other schema checks if needed (e.g., check-readthedocs)
@@ -112,19 +112,19 @@ repos:
 
   # Validate pyproject.toml structure
   - repo: https://github.com/abravalheri/validate-pyproject
-    rev: v0.24.1
+    rev: v0.25
     hooks:
       - id: validate-pyproject
         additional_dependencies: ['validate-pyproject-schema-store[all]']
 
   # Optional: Security scanning with Bandit (Python specific)
   - repo: https://github.com/PyCQA/bandit
-    rev: 1.9.3
+    rev: 1.9.4
     hooks:
       - id: bandit
         args: [-c, pyproject.toml]  # Example: Configure via pyproject.toml
         types: [python]
   - repo: https://github.com/owenlamont/uv-secure
-    rev: 0.15.4
+    rev: 0.17.1
     hooks:
       - id: uv-secure

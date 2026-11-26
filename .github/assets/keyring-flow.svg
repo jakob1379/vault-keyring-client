@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 400" width="960" height="400" role="img" aria-labelledby="t d">
+<title id="t">vault-keyring-client data flow</title>
+<desc id="d">ansible-playbook asks vault-keyring-client for the vault id my_vault_id. The client reads the password from the OS keyring and prints it back to Ansible, which decrypts ~/.become_passwords.yml without prompting.</desc>
+<defs>
+<g id="key">
+<circle cx="0" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="7"/>
+<rect x="-3.5" y="34" width="7" height="104" rx="2" fill="currentColor"/>
+<rect x="3" y="110" width="13" height="7" rx="1.5" fill="currentColor"/>
+<rect x="3" y="125" width="8" height="7" rx="1.5" fill="currentColor"/>
+</g>
+<clipPath id="typed"><rect class="type" x="40" y="44" width="236" height="26"/></clipPath>
+</defs>
+<style>
+svg{--bg:#E8EDF3;--card:#F7F9FC;--ink:#16233A;--muted:#5C6B82;--line:#B4C0D0;--brass:#B47A12;--brass-soft:#F2DFB5;--term:#1A2740;--term-ink:#DCE4EF;--term-dim:#8D9DB6;--ok:#7BD3A0}
+@media (prefers-color-scheme:dark){svg{--bg:#0F1829;--card:#16233A;--ink:#E4EAF3;--muted:#91A0B7;--line:#2E3E5A;--brass:#E5B04C;--brass-soft:#3A3220;--term:#0A1322;--term-ink:#DCE4EF;--term-dim:#7F8FA9;--ok:#7BD3A0}}
+text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:13px;fill:var(--ink)}
+.sans{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+.bg{fill:var(--bg)}
+.card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.term{fill:var(--term);stroke:var(--line);stroke-width:1}
+.t{fill:var(--term-ink)}
+.dim{fill:var(--term-dim)}
+.ok{fill:var(--ok)}
+.muted{fill:var(--muted)}
+.brass{fill:var(--brass)}
+.wire{stroke:var(--line);stroke-width:2;stroke-dasharray:4 5}
+.dot-req{fill:var(--card);stroke:var(--ink);stroke-width:2.5}
+.dot-pw{fill:var(--brass)}
+.node{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.halo{fill:var(--brass-soft);opacity:0}
+.ring{fill:none;stroke:var(--muted);stroke-width:5}
+.k-idle{color:var(--muted)}
+.k-hot{color:var(--brass)}
+.num{fill:none;stroke:var(--muted);stroke-width:1.5}
+.lock{fill:none;stroke:var(--ink);stroke-width:2}
+.lockb{fill:var(--ink)}
+.cipher{opacity:0}
+.type{transform-box:fill-box;transform-origin:0 0}
+.keys{transform-box:view-box;transform-origin:818px 92px}
+.a{animation-duration:12s;animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+.type.a{animation-name:type;animation-timing-function:steps(27,end)}
+.l2{animation-name:l2}.l3{animation-name:l3}.l4{animation-name:l4}
+.reqA{animation-name:reqA}.reqB{animation-name:reqB}
+.pwB{animation-name:pwB}.pwA{animation-name:pwA}
+.nodeglow{animation-name:nodeglow}
+.keys.a{animation-name:swing}
+.k-hot.a{animation-name:hot}
+.keyglow{animation-name:keyglow}
+.cipher.a{animation-name:cipher}.plain{animation-name:plain}
+.shackle{animation-name:shackle}
+.s1{animation-name:s1}.s2{animation-name:s2}.s3{animation-name:s3}
+@keyframes type{0%,2%{transform:scaleX(0)}10%,100%{transform:scaleX(1)}}
+@keyframes l2{0%,72%{opacity:0}74%,99%{opacity:1}100%{opacity:0}}
+@keyframes l3{0%,76%{opacity:0}78%,99%{opacity:1}100%{opacity:0}}
+@keyframes l4{0%,80%{opacity:0}82%,99%{opacity:1}100%{opacity:0}}
+@keyframes reqA{0%,10%{opacity:0;transform:translateX(-50px)}11%{opacity:1;transform:translateX(-50px)}20%{opacity:1;transform:translateX(50px)}21%,100%{opacity:0;transform:translateX(50px)}}
+@keyframes reqB{0%,26%{opacity:0;transform:translateX(-50px)}27%{opacity:1;transform:translateX(-50px)}35%{opacity:1;transform:translateX(50px)}36%,100%{opacity:0;transform:translateX(50px)}}
+@keyframes pwB{0%,46%{opacity:0;transform:translateX(50px)}47%{opacity:1;transform:translateX(50px)}55%{opacity:1;transform:translateX(-50px)}56%,100%{opacity:0;transform:translateX(-50px)}}
+@keyframes pwA{0%,58%{opacity:0;transform:translateX(50px)}59%{opacity:1;transform:translateX(50px)}67%{opacity:1;transform:translateX(-50px)}68%,100%{opacity:0;transform:translateX(-50px)}}
+@keyframes nodeglow{0%,19%{opacity:0}22%,26%{opacity:1}30%,54%{opacity:0}57%,59%{opacity:1}62%,100%{opacity:0}}
+@keyframes swing{0%,35%{transform:rotate(0)}38%{transform:rotate(-7deg)}42%{transform:rotate(5deg)}45%{transform:rotate(-2deg)}48%,100%{transform:rotate(0)}}
+@keyframes hot{0%,37%{color:var(--muted)}41%,90%{color:var(--brass)}95%,100%{color:var(--muted)}}
+@keyframes keyglow{0%,37%{opacity:0}41%,90%{opacity:.9}95%,100%{opacity:0}}
+@keyframes cipher{0%,68%{opacity:1}72%,90%{opacity:0}96%,100%{opacity:1}}
+@keyframes plain{0%,70%{opacity:0}74%,90%{opacity:1}94%,100%{opacity:0}}
+@keyframes shackle{0%,68%{transform:translateY(0)}71%,90%{transform:translateY(-4px)}94%,100%{transform:translateY(0)}}
+@keyframes s1{0%,8%{opacity:.4}11%,38%{opacity:1}42%,100%{opacity:.4}}
+@keyframes s2{0%,40%{opacity:.4}44%,64%{opacity:1}68%,100%{opacity:.4}}
+@keyframes s3{0%,66%{opacity:.4}70%,92%{opacity:1}96%,100%{opacity:.4}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.halo{opacity:.9}}
+</style>
+
+<rect class="bg" width="960" height="400" rx="18"/>
+
+<rect class="term" x="24" y="24" width="276" height="188" rx="12"/>
+<g clip-path="url(#typed)"><text class="t" x="40" y="62">$ ansible-playbook site.yml</text></g>
+<text class="dim a l2" x="40" y="100">PLAY [amazing_host] ****</text>
+<text class="dim a l3" x="40" y="126">TASK [Gathering Facts] ****</text>
+<text class="ok a l4" x="40" y="152">ok: [web01]</text>
+
+<rect class="card" x="24" y="232" width="276" height="144" rx="12"/>
+<path class="lock a shackle" d="M44.5 266v-5a5.5 5.5 0 0 1 11 0v5"/>
+<rect class="lockb" x="41" y="265" width="18" height="13" rx="2.5"/>
+<text x="68" y="276" font-weight="700">~/.become_passwords.yml</text>
+<g class="cipher a">
+<text class="muted" x="40" y="310">$ANSIBLE_VAULT;1.1;AES256</text>
+<text class="muted" x="40" y="333">6338643362316138393666396537</text>
+<text class="muted" x="40" y="356">3930653864333231626538396130</text>
+</g>
+<g class="a plain">
+<text x="40" y="310">become_pass_web01: ********</text>
+<text x="40" y="333">become_pass_web02: ********</text>
+<text x="40" y="356">become_pass_db01: ********</text>
+</g>
+
+<line class="wire" x1="300" y1="110" x2="400" y2="110"/>
+<line class="wire" x1="300" y1="144" x2="400" y2="144"/>
+<line class="wire" x1="600" y1="110" x2="700" y2="110"/>
+<line class="wire" x1="600" y1="144" x2="700" y2="144"/>
+<text class="muted" x="350" y="98" text-anchor="middle" font-size="11">my_vault_id</text>
+<text class="brass" x="350" y="166" text-anchor="middle" font-size="11">password</text>
+<text class="muted" x="650" y="98" text-anchor="middle" font-size="11">my_vault_id</text>
+<text class="brass" x="650" y="166" text-anchor="middle" font-size="11">password</text>
+<circle class="dot-req a reqA" cx="350" cy="110" r="6"/>
+<circle class="dot-req a reqB" cx="650" cy="110" r="6"/>
+<circle class="dot-pw a pwB" cx="650" cy="144" r="6.5"/>
+<circle class="dot-pw a pwA" cx="350" cy="144" r="6.5"/>
+
+<rect class="halo a nodeglow" x="395" y="77" width="210" height="98" rx="14"/>
+<rect class="node" x="400" y="82" width="200" height="88" rx="10"/>
+<text x="500" y="122" text-anchor="middle" font-weight="700">vault-keyring-client</text>
+<text class="muted" x="500" y="143" text-anchor="middle" font-size="11">--vault-id my_vault_id</text>
+
+<rect class="card" x="700" y="24" width="236" height="352" rx="12"/>
+<g class="keys a">
+<circle class="halo a keyglow" cx="818" cy="134" r="24"/>
+<use href="#key" class="k-idle" transform="translate(818 114) rotate(24)"/>
+<use href="#key" class="k-idle" transform="translate(818 114) rotate(-24)"/>
+<use href="#key" class="k-hot a" transform="translate(818 114)"/>
+<circle class="ring" cx="818" cy="92" r="28"/>
+</g>
+<text class="brass" x="818" y="290" text-anchor="middle" font-size="12">my_vault_id</text>
+<text class="sans" x="818" y="340" text-anchor="middle" font-size="17" font-weight="600">OS keyring</text>
+<text class="sans muted" x="818" y="360" text-anchor="middle" font-size="12">via Python keyring</text>
+
+<g class="a s1"><circle class="num" cx="350" cy="258" r="11"/><text class="sans" x="350" y="263" text-anchor="middle" font-size="12">1</text><text class="sans" x="372" y="263" font-size="14">Ansible asks for my_vault_id</text></g>
+<g class="a s2"><circle class="num" cx="350" cy="302" r="11"/><text class="sans" x="350" y="307" text-anchor="middle" font-size="12">2</text><text class="sans" x="372" y="307" font-size="14">The keyring returns the password</text></g>
+<g class="a s3"><circle class="num" cx="350" cy="346" r="11"/><text class="sans" x="350" y="351" text-anchor="middle" font-size="12">3</text><text class="sans" x="372" y="351" font-size="14">The vault decrypts, no prompt</text></g>
+</svg>

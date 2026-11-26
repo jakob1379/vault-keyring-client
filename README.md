@@ -1,24 +1,37 @@
 # Vault Keyring Client
 
-This project provides an installable version of the original community script
-`vault-keyring-client.py` for Ansible, allowing you to manage vault passwords
-using your OS's native keyring application.
+[![PyPI](https://img.shields.io/pypi/v/vault-keyring-client)](https://pypi.org/project/vault-keyring-client/)
+[![License: GPL-3.0-or-later](https://img.shields.io/badge/license-GPL--3.0--or--later-blue)](LICENSE)
 
-## Description
+Keep your Ansible vault passwords in your operating system's keyring and let
+Ansible fetch them on its own. No plaintext password files, no prompts on every
+run.
 
-The `vault-keyring-client` is a CLI tool to store and retrieve Ansible vault
-passwords in the keyring. This version is implemented using `typer` for a modern
-CLI interface, making it easy to use and extend.
+<p align="center">
+  <img src=".github/assets/keyring-flow.svg" width="100%" alt="Diagram: ansible-playbook asks vault-keyring-client for the vault id my_vault_id, the client reads the matching password from the OS keyring and hands it back, and Ansible decrypts ~/.become_passwords.yml without prompting.">
+</p>
 
-## Installation
+`vault-keyring-client` is an installable, [Typer](https://typer.tiangolo.com/)
+based version of the community script `vault-keyring-client.py`. Ansible calls
+it as a vault password client: it looks up the password for a vault id in the
+keyring and prints it to stdout.
 
-To install the `vault-keyring-client`, you can use use your preferred python
-package manager
+## Install
+
+Requires Python 3.11 or newer. The package is published on
+[PyPI](https://pypi.org/project/vault-keyring-client/) and installs the
+`vault-keyring-client` command:
+
+```console
+$ uv tool install vault-keyring-client   # or: pipx install vault-keyring-client
+$ pip install vault-keyring-client        # into the current environment
+```
 
 ## Usage
 
 ```console
-$ vault-keyring-client [OPTIONS]
+$ vault-keyring-client --set --vault-id my_vault_id   # store a password
+$ vault-keyring-client --vault-id my_vault_id         # print it
 ```
 
 **Options**:
@@ -31,43 +44,43 @@ $ vault-keyring-client [OPTIONS]
   customize the installation.
 - `--help`: Show this message and exit.
 
-## Original Script
+When an option is left out, the client falls back to the `[vault]` section of
+your Ansible config, then to a built-in default:
 
-This project is based on the original `vault-keyring-client.py` script
-contributed by Matt Martz and Justin Mayer. The original script can be found in
-the Ansible Community's contrib-scripts repository:
+| Option       | `ansible.cfg` key  | Default         |
+| ------------ | ------------------ | --------------- |
+| `--vault-id` | `[vault] keyname`  | `ansible`       |
+| `--username` | `[vault] username` | your login name |
 
-[Original vault-keyring-client.py script](https://github.com/ansible-community/contrib-scripts/blob/main/vault/vault-keyring-client.py)
+If no password is stored for that key, it prints `No password found.` and exits
+with code 2.
 
 ## Using with Ansible
 
-The script is designed to work with Ansible, making your playbooks more
-efficient by eliminating the need to manually enter `become_pass` for each host.
-Follow these steps to set it up:
+The client removes the need to type `become_pass` for each host. Set it up once:
 
-1. **Create an Entry**: First, create an entry with
+1. **Create an entry**: store the vault password with
    `vault-keyring-client --set --vault-id my_vault_id`.
 
-2. **Configure Ansible**: To make Ansible automatically try the passwords stored
-   in your keyring, add the following to your `.envrc` or manually source your
-   `.env` file:
+2. **Configure Ansible**: to make Ansible try the passwords stored in your
+   keyring, add the following to your `.envrc` or source it from your `.env`
+   file:
 
    ```bash
-   export ANSIBLE_VAULT_IDENTITY_LIST="my_vault_id@$(poetry run which vault-keyring-client),my_other_vault_id@$(poetry run which vault-keyring-client)"
+   export ANSIBLE_VAULT_IDENTITY_LIST="my_vault_id@$(command -v vault-keyring-client),my_other_vault_id@$(command -v vault-keyring-client)"
    ```
 
-3. **Create a Secure Vault**: Create a vault file outside of your repository to
-   avoid accidental commits. Store it in a safe location, for example,
-   `~/.become_passwords`. Structure the key-value pairs as
-   `become_pass_<hostname>: "mytopsecret_host_password"`. Encrypt the file
-   using:
+3. **Create a secure vault**: create a vault file outside of your repository to
+   avoid accidental commits, for example `~/.become_passwords.yml`. Structure
+   the key-value pairs as `become_pass_<hostname>: "mytopsecret_host_password"`
+   and encrypt the file:
 
    ```sh
    ansible-vault encrypt --encrypt-vault-id my_vault_id <path_to_vault>
    ```
 
-4. **Update Playbooks**: Add the following configuration to your playbooks to
-   use the stored passwords:
+4. **Update playbooks**: point your playbooks at the stored passwords:
+
    ```yml
    - name: Playbook that does not require manual sudo passwords
      hosts: amazing_host
@@ -80,11 +93,19 @@ Follow these steps to set it up:
      roles:
        - users
    ```
-   When you run the playbook, Ansible will try all keys in the
-   `VAULT_IDENTITY_LIST` in order and use the correct one to unlock
-   `~/.become_passwords`, matching the password with the hostname.
+
+   When you run the playbook, Ansible tries each id in
+   `ANSIBLE_VAULT_IDENTITY_LIST` in order, uses the one that unlocks
+   `~/.become_passwords.yml`, and picks the password matching each host.
+
+## Credits
+
+This project is based on the original `vault-keyring-client.py` script
+contributed by Matt Martz and Justin Mayer to the Ansible Community's
+contrib-scripts repository:
+[original vault-keyring-client.py script](https://github.com/ansible-community/contrib-scripts/blob/main/vault/vault-keyring-client.py).
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 or later. See
-the [LICENSE](https://www.gnu.org/licenses/gpl-3.0.txt) file for details.
+Licensed under the GNU General Public License v3.0 or later. See
+[LICENSE](LICENSE) for details.
